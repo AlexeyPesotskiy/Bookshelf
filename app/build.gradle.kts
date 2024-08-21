@@ -51,6 +51,18 @@ android {
 
 dependencies {
 
+//    Retrofit
+    implementation(libs.retrofit)
+//    Coil
+    implementation(libs.coil.kt.coil)
+//    Retrofit with Kotlin serialization Converter
+    implementation(libs.okhttp)
+    implementation (libs.converter.kotlinx.serialization)
+//    Kotlin serialization
+    implementation(libs.kotlinx.serialization.json)
+//    ViewModel Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
