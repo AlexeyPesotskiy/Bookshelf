@@ -19,7 +19,7 @@ data class BookItem(
 /**
  * Информация о книге
  *
- * @param imageLink ссылка на обложку
+ * @param thumbnail ссылка на обложку
  */
 @Serializable
 data class BookInfo(

@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * Экран со списком книг
  *
- * @param state состояние BooksListViewModel
+ * @param state состояние [BooksListViewModel]
  * @param onRetry лямбда-функция для обновления списка книг
  */
 @Composable

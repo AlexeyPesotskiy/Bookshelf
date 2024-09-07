@@ -34,7 +34,7 @@ class BooksListViewModel(private val booksRepository: BooksRepository) : ViewMod
         viewModelScope.launch(Dispatchers.IO) {
             _booksListUiState.value = BooksListUiState.Loading
             _booksListUiState.value = try {
-                BooksListUiState.Success(booksRepository.getBooksList())
+                BooksListUiState.Success(booksRepository.getBooks())
             } catch (ex: Exception) {
                 BooksListUiState.Error
             }
