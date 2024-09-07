@@ -2,36 +2,34 @@ package com.example.bookshelf.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 //Список книг
 @Serializable
-data class BooksList(
-    val items: List<BookItem>
+data class BookList(
+    val items: List<BookItem> = emptyList()
 )
 
 //Элемент из списка книг
 @Serializable
 data class BookItem(
+    @SerialName("volumeInfo")
     val bookInfo: BookInfo
 )
 
 /**
  * Информация о книге
  *
- * @param title заголовок
  * @param imageLink ссылка на обложку
  */
 @Serializable
 data class BookInfo(
-    val title: String,
-    @SerialName("imageLink")
-    val thumbnail: ImageLink
+    @SerialName("imageLinks")
+    val thumbnail: BookImageLink
 )
 
 //Ссылка на обложку книги
 @Serializable
-data class ImageLink(
+data class BookImageLink(
     @SerialName("thumbnail")
-    val imgSrc: String
+    var imgSrc: String
 )

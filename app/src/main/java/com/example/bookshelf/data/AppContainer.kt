@@ -16,15 +16,8 @@ interface AppContainer {
 class DefaultAppContainer : AppContainer {
     private val baseUrl = "https://www.googleapis.com/books/v1/"
 
-    /**
-     * Игнорировать неиспользуемые поля из Json
-     */
-    private val json = Json {
-        ignoreUnknownKeys = true
-    }
-
     private val retrofit = Retrofit.Builder()
-        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrl)
         .build()
 
