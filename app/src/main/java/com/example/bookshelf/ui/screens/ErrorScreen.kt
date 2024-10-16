@@ -17,13 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import com.example.bookshelf.R
 
 /**
- * Экран со списком книг
+ * Экран сообщения об ошибке при загрузке списка
  *
- * @param onRetry лямбда-функция для обновления списка книг
+ * @param onRetry лямбда-функция для повторной попытки загрузки списка книг
  */
 @Composable
 fun ErrorScreen(onRetry: () -> Unit, modifier: Modifier = Modifier) {
-    Column (
+    Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier

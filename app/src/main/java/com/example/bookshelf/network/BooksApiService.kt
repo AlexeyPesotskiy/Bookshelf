@@ -5,5 +5,5 @@ import retrofit2.http.Query
 
 interface BooksApiService {
     @GET("volumes?maxResults=40&fields=items/volumeInfo/imageLinks/thumbnail")
-    suspend fun fetchBooksList(@Query("q") userQuery: String = "Saint Petersburg"): BookList
+    suspend fun fetchBooksList(@Query("q") userQuery: String): BookList
 }

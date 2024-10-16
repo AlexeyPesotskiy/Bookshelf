@@ -24,7 +24,7 @@ fun BookshelfApp() {
 
         BooksListScreen(
             state = booksListViewModel.booksListUiState,
-            onRetry = booksListViewModel::getBooksList,
+            onSearch = booksListViewModel::getBooksList,
             modifier = Modifier.padding(innerPadding)
         )
     }

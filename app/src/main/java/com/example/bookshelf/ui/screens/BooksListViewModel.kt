@@ -26,15 +26,15 @@ class BooksListViewModel(private val booksRepository: BooksRepository) : ViewMod
     var booksListUiState = _booksListUiState.asStateFlow()
 
     init {
-        getBooksList()
+        getBooksList("Saint Petersburg")
     }
 
-    fun getBooksList() {
+    fun getBooksList(userQuery: String) {
         //Выполнить запрос к сети на потоке I/O
         viewModelScope.launch(Dispatchers.IO) {
             _booksListUiState.value = BooksListUiState.Loading
             _booksListUiState.value = try {
-                BooksListUiState.Success(booksRepository.getBooks())
+                BooksListUiState.Success(booksRepository.getBooks(userQuery))
             } catch (ex: Exception) {
                 BooksListUiState.Error
             }
