@@ -4,6 +4,8 @@
     <string name="loading">loading</string>
     <string name="book_cover">book cover</string>
     <string name="retry">Retry</string>
-    <string name="error_loading">Error loading data. Check your internet connection</string>
+    <string name="error_loading">Loading error.\nCheck your internet connection</string>
     <string name="no_data_found">Nothing found matching your request.</string>
+    <string name="search_placeholder">Поиск...</string>
+    <string name="search_placeholder_error">Введите поисковый запрос</string>
 </resources>

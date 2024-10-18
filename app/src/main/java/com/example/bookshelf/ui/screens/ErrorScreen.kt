@@ -14,6 +14,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.example.bookshelf.R
 
 /**
@@ -24,7 +25,10 @@ import com.example.bookshelf.R
 @Composable
 fun ErrorScreen(onRetry: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(
+            space = dimensionResource(R.dimen.medium_padding),
+            alignment = Alignment.CenterVertically
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
@@ -36,7 +40,7 @@ fun ErrorScreen(onRetry: () -> Unit, modifier: Modifier = Modifier) {
         Text(
             text = stringResource(R.string.error_loading),
             textAlign = TextAlign.Center,
-            modifier = Modifier.width(dimensionResource(R.dimen.image_size))
+            modifier = Modifier.width(dimensionResource(R.dimen.image_size)*2)
         )
         Button(
             onClick = onRetry,

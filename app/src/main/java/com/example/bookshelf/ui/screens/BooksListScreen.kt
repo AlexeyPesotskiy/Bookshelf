@@ -1,105 +1,71 @@
 package com.example.bookshelf.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.bookshelf.R
+import com.example.bookshelf.ui.BooksListUiState
+import com.example.bookshelf.ui.ResultType
+import com.example.bookshelf.ui.screens.components.SearchField
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- * Экран со списком книг
+ * Экран со строкой поиска и списком книг
  *
- * @param state состояние [BooksListViewModel]
- * @param onRetry лямбда-функция для обновления списка книг
+ * @param state состояние ViewModel
+ * @param onSearch функция для отправки запроса
+ * @param onSearchQueryChange функция для изменения запроса
  */
 @Composable
 fun BooksListScreen(
     state: StateFlow<BooksListUiState>,
-    onSearch: (String) -> Unit,
+    onSearch: () -> Unit,
+    onSearchQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var searchQueryText by remember { mutableStateOf("") }
+    val uiState = state.collectAsState().value
     Column(
         modifier
             .padding(horizontal = dimensionResource(R.dimen.medium_padding))
             .fillMaxSize()
     ) {
-        BooksSearchField(searchQueryText, onSearch) {
-            searchQueryText = it
-        }
+        SearchField(uiState.currentSearchQueryText, onSearch, onSearchQueryChange)
 
         val screenModifier = Modifier
             .fillMaxSize()
             .padding(vertical = dimensionResource(R.dimen.medium_padding))
 
 //      Открыть экран, соответствующий состоянию BooksListViewModel
-        when (val uiState = state.collectAsState().value) {
-            is BooksListUiState.Loading -> { LoadingScreen(screenModifier) }
-            is BooksListUiState.Error -> { ErrorScreen({ onSearch(searchQueryText) }, screenModifier) }
-            is BooksListUiState.Success -> {
-                if (uiState.books.isNotEmpty())
-                    BooksList(uiState.books, screenModifier)
+        when (uiState.resultType) {
+            is ResultType.Loading -> { LoadingScreen(screenModifier) }
+            is ResultType.Error -> { ErrorScreen({ onSearch() }, screenModifier) }
+            is ResultType.Success -> {
+                if (uiState.resultType.books.isNotEmpty() || uiState.isBeforeFirstRequest)
+                    BooksList(uiState.resultType.books, screenModifier)
                 else
                     NoDataFoundScreen(screenModifier)
             }
         }
     }
-}
-
-/**
- * Поле ввода поискового запроса
- *
- * @param searchText текст запроса
- * @param onSearch лямбда-функция отправки поискового запроса
- * @param onQueryChange callback при изменении текста запроса пользователем
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BooksSearchField(
-    searchText: String,
-    onSearch: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    onQueryChange: (String) -> Unit
-) {
-    SearchBar(
-        inputField = {
-            SearchBarDefaults.InputField(
-                query = searchText,
-                onQueryChange = { onQueryChange(it) },
-                onSearch = { onSearch(it) },
-                expanded = false,
-                onExpandedChange = {}
-            )
-        },
-        expanded = false,
-        onExpandedChange = {},
-        windowInsets = WindowInsets(0),
-        modifier = modifier
-    ) {}
 }
 
 @Composable
@@ -129,16 +95,25 @@ fun BooksCard(
     imgSrc: String,
     modifier: Modifier = Modifier
 ) {
+    val placeholderModifier = Modifier
+        .padding(dimensionResource(R.dimen.card_placeholder_size))
     Card(modifier) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imgSrc)
                 .build(),
             contentScale = ContentScale.FillWidth,
             contentDescription = stringResource(R.string.book_cover),
-            error = painterResource(R.drawable.ic_broken_image),
-            placeholder = painterResource(R.drawable.loading_img),
-            modifier = modifier
+            error = {
+                Image(
+                    painterResource(R.drawable.ic_broken_image), "",
+                    modifier = placeholderModifier
+                )
+            },
+            loading = {
+                CircularProgressIndicator(modifier = placeholderModifier)
+            },
+            modifier = modifier.heightIn(min = dimensionResource(R.dimen.image_size)),
         )
     }
 }
