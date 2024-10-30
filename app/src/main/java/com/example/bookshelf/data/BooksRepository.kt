@@ -1,12 +1,13 @@
 package com.example.bookshelf.data
 
 import com.example.bookshelf.network.BooksApiService
+import javax.inject.Inject
 
 interface BooksRepository {
     suspend fun getBooks(userQuery: String): List<String>
 }
 
-class NetworkBooksRepository(
+class NetworkBooksRepository @Inject constructor(
     private val booksApiService: BooksApiService
 ) : BooksRepository {
 

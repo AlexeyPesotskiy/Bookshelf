@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 //Все 3 возможные состояния (Загружено, Загрузка, Ошибка)
 sealed interface ResultType {
@@ -27,7 +28,7 @@ data class BooksListUiState (
     val isBeforeFirstRequest: Boolean = true,
 )
 
-class BooksListViewModel(private val booksRepository: BooksRepository) : ViewModel() {
+class BooksListViewModel @Inject constructor(private val booksRepository: BooksRepository) : ViewModel() {
 
     private var _booksListUiState = MutableStateFlow(
         BooksListUiState(
@@ -73,10 +74,7 @@ class BooksListViewModel(private val booksRepository: BooksRepository) : ViewMod
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                BooksListViewModel(
-                    booksRepository = (this[APPLICATION_KEY] as BookshelfApplication)
-                        .container.booksRepository
-                )
+                (this[APPLICATION_KEY] as BookshelfApplication).appComponent.viewModel()
             }
         }
     }
