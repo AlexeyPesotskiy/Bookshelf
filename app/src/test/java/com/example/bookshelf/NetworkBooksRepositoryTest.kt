@@ -14,9 +14,10 @@ class NetworkBooksRepositoryTest {
 
     @Test
     fun networkBooksRepository_getBooks_verifyBookList() = runTest {
+        val fakeQueryText = "fake_query"
         assertEquals(
             FakeDataSource.imgListResult,
-            NetworkBooksRepository(FakeBooksApiService()).getBooks()
+            NetworkBooksRepository(FakeBooksApiService()).getBooks(fakeQueryText)
         )
     }
 }

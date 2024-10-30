@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error">ошибка</string>
+    <string name="loading">загрузка</string>
+    <string name="book_cover">обложка книги</string>
+    <string name="broken_image">битое изображение</string>
+    <string name="retry">Повторить</string>
+    <string name="error_loading">Ошибка загрузки\nПроверьте интернет-соединение</string>
+    <string name="no_data_found">По вашему запросу ничего не найдено</string>
+    <string name="search_placeholder">Поиск...</string>
+    <string name="search_placeholder_error">Введите поисковый запрос</string>
+</resources>

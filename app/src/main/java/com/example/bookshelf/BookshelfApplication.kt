@@ -1,14 +1,13 @@
 package com.example.bookshelf
 
 import android.app.Application
-import com.example.bookshelf.data.AppContainer
-import com.example.bookshelf.data.DefaultAppContainer
+import com.example.bookshelf.di.ApplicationComponent
+import com.example.bookshelf.di.DaggerApplicationComponent
 
 class BookshelfApplication : Application() {
-    lateinit var container: AppContainer
+    lateinit var appComponent: ApplicationComponent
     override fun onCreate() {
         super.onCreate()
-//        Экземляр di контейнера, который будет использоваться в ViewModel
-        container = DefaultAppContainer()
+        appComponent = DaggerApplicationComponent.create()
     }
 }
