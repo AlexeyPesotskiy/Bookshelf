@@ -106,7 +106,8 @@ fun BooksCard(
             contentDescription = stringResource(R.string.book_cover),
             error = {
                 Image(
-                    painterResource(R.drawable.ic_broken_image), "",
+                    painterResource(R.drawable.ic_broken_image),
+                    contentDescription = stringResource(R.string.broken_image),
                     modifier = placeholderModifier
                 )
             },

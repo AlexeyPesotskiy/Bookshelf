@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="image_size">160dp</dimen>
+    <dimen name="error_message_width">320dp</dimen>
     <dimen name="card_placeholder_size">32dp</dimen>
     <dimen name="list_item_spacing">4dp</dimen>
     <dimen name="medium_padding">16dp</dimen>

@@ -2,6 +2,8 @@ package com.example.bookshelf.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,7 +15,7 @@ import com.example.bookshelf.R
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier,
+        modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(dimensionResource(R.dimen.image_size))
